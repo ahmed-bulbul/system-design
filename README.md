@@ -1,10 +1,12 @@
 # Low-Level Design Principles
 
-This document provides an overview of the **SOLID Principles** and focuses on two principles: **Single Responsibility Principle** and **Liskov Substitution Principle**.
+
 
 ---
 
 ## SOLID Principles
+
+This document provides an overview of the **SOLID Principles** and focuses on two principles: **Single Responsibility Principle** and **Liskov Substitution Principle**.
 
 The SOLID principles are guidelines for designing maintainable and scalable object-oriented systems.
 
@@ -114,6 +116,68 @@ class InvoicePrinter{
 }
 
 ---
+
+### 2. Open-Closed Principle (OCP)
+
+**Definition:**
+Software entities should be open for extension but closed for modification.
+
+**Key Points:** 
+
+- A class should be open for extension but closed for modification.
+
+**Example:**
+
+Here is an example of violating OCP:
+
+```java
+class InvoiceDao{
+    Invoice invoice;
+    public InvoiceDao(Invoice invoice){
+        this.invoice = invoice;
+    }
+    public void saveToDatabase(){
+        // Save invoice to database
+    }
+
+    // this point this is live 
+
+    //after some time another requirement added to save invoice to file
+    // but if I want add this requirement same class this need to test again and again
+    //thats not good practice and voilests OCP
+
+
+    //save invoice to file
+    public void saveToFile(){
+        // Save invoice to file
+    }
+
+}
+```
+
+Solution:
+
+```java
+interface InvoiceDao{
+    void saveToDatabase();
+    void saveToFile();
+}
+
+class DatabaseInvoiceDao implements InvoiceDao{
+
+    public void saveToDatabase(){
+        // Save invoice to database
+    }
+}
+
+class FileInvoiceDao implements InvoiceDao{
+
+    public void saveToFile(){
+        // Save invoice to file
+    }
+}
+``` 
+
 
 ### 3. Liskov Substitution Principle (LSP)
 
