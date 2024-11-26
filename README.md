@@ -1,6 +1,6 @@
 # Low-Level Design Principles
 
-[Back to SOLID Principles](#solid-principles)
+[SOLID Principles](#solid-principles)
 
 ---
 
