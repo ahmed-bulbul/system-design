@@ -3,6 +3,10 @@
 [1.SOLID Principles](#solid-principles) <br>
 [2.Strategy Pattern](#strategy-pattern)
 
+# High-Level Design Principles
+
+[1.wait and notify pattern](#wait-and-notify-pattern) <br>
+
 ---
 
 ## SOLID Principles() 
