@@ -1,7 +1,7 @@
 # Low-Level Design Principles
 
-[SOLID Principles](#solid-principles)
-[Strategy Pattern](#strategy-pattern)
+[1.SOLID Principles](#solid-principles) <br>
+[2.Strategy Pattern](#strategy-pattern)
 
 ---
 
