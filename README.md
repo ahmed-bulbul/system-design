@@ -205,3 +205,73 @@ class Bicycle implements Vehicle {
 
 
 ```
+
+### 4. Interface Segregation Principle (ISP)
+
+**Definition:**
+Interface should be such , that client should not implement unnesessary functions they do not need.
+
+**Key Points:**
+
+- A class should only depend on interfaces that it implements.
+
+**Example:**
+
+
+Here is an example of violating ISP:
+
+```java
+interface RestaurentEmployee{
+    void washDishes();
+    void serveCustomers();
+    void cookFood();
+}
+
+class waiter implements RestaurentEmployee{
+    @Override
+    public void washDishes() {
+        // not my job
+    }
+
+    @Override
+    public void serveCustomers() {
+        // my job
+        System.out.println("Serving customers");
+    }
+
+    @Override
+    public void cookFood() {
+        // not my job
+    }
+}
+
+```
+
+Solution:
+
+```java
+interface ServeCustomers{
+    void serveCustomers();
+}
+
+interface CookFood{
+    void cookFood();
+}
+
+class waiter implements ServeCustomers{ 
+    @Override
+    public void serveCustomers() {
+        // my job
+        System.out.println("Serving customers");
+    }
+}
+
+class chef implements CookFood{
+    @Override
+    public void cookFood() {
+        // my job
+        System.out.println("Cooking food");
+    }
+}
+
+```
