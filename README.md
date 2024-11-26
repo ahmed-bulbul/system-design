@@ -118,7 +118,7 @@ class InvoicePrinter{
 
 ---
 
-### 2. Open-Closed Principle (OCP)
+### 2. Open Closed Principle (OCP)
 
 **Definition:**
 Software entities should be open for extension but closed for modification.
