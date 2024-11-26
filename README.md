@@ -4,7 +4,7 @@
 
 ---
 
-## SOLID Principles
+## SOLID Principles(S - Single Responsibility Principle, O - Open-Closed Principle, L - Liskov Substitution Principle, I - Interface Segregation Principle, D - Dependency Inversion Principle)
 
 This document provides an overview of the **SOLID Principles** and focuses on two principles: **Single Responsibility Principle** and **Liskov Substitution Principle**.
 
