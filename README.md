@@ -27,6 +27,91 @@ A class should have only one reason to change, meaning it should only have one r
 
 **Example:**  
 A class for user management should handle only user-related tasks, while logging or email-related responsibilities should be delegated to separate classes.
+**Example:**  
+
+Here is an example of violating LSP:
+
+```java
+class Marker{
+    String name;
+    String color;
+    int price;
+    int quantity;
+    Marker(String name, String color, int price, int quantity){
+        this.name = name;
+        this.color = color;
+        this.price = price;
+        this.quantity = quantity;
+    }
+    
+}
+
+class Invoice{
+    private Marker marker;
+    private int quantity;
+
+    public Invoice(Marker marker, int quantity){
+        this.marker = marker;
+        this.quantity = quantity;
+    }
+
+    public int calculateTotal(){
+        return marker.price * quantity;
+    
+    }
+
+    public void printInvoice(){
+        System.out.println("Invoice for " + quantity + " " + marker.name + "s");
+        System.out.println("Total: $" + calculateTotal());
+    }
+
+    public void saveToDatabase(){
+        // Save invoice to database
+    }
+}
+
+```
+Solution:
+
+```java
+class Invoice{
+    private Marker marker;
+    private int quantity;
+
+    public Invoice(Marker marker, int quantity){
+        this.marker = marker;
+        this.quantity = quantity;
+    }
+
+    public int calculateTotal(){
+        return marker.price * quantity;
+    }
+}
+
+class InvoiceDao{
+    Invoice invoice;
+
+    public InvoiceDao(Invoice invoice){
+        this.invoice = invoice;
+    }
+
+    public void saveToDatabase(){
+        // Save invoice to database
+    }
+}
+
+class InvoicePrinter{
+    Invoice invoice;
+
+    public InvoicePrinter(Invoice invoice){ 
+        this.invoice = invoice;
+    }
+
+    public void printInvoice(){
+        System.out.println("Invoice for " + quantity + " " + marker.name + "s");
+        System.out.println("Total: $" + calculateTotal());
+    }
+}
 
 ---
 
