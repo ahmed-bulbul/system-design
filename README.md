@@ -1,10 +1,10 @@
 # Low-Level Design Principles
 
-
+[Back to SOLID Principles](#solid-principles)
 
 ---
 
-## SOLID Principles(#The-SOLID-Principles-are-guides-for-designing-maintainable-and-scalable-object-oriented-systems.) 
+## SOLID Principles() 
 
 This document provides an overview of the **SOLID Principles** and focuses on two principles: **Single Responsibility Principle** and **Liskov Substitution Principle**.
 
