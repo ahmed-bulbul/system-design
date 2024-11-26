@@ -10,11 +10,11 @@ This document provides an overview of the **SOLID Principles** and focuses on tw
 
 The SOLID principles are guidelines for designing maintainable and scalable object-oriented systems.
 
-1. **S** - Single Responsibility Principle  
-2. **O** - Open-Closed Principle  
-3. **L** - Liskov Substitution Principle  
-4. **I** - Interface Segregation Principle  
-5. **D** - Dependency Inversion Principle  
+1. [**S** - Single Responsibility Principle](#1-single-responsibility-principle-srp)  
+2. [**O** - Open-Closed Principle](#2-open-closed-principle-ocp)  
+3. [**L** - Liskov Substitution Principle](#3-liskov-substitution-principle-lsp)  
+4. [**I** - Interface Segregation Principle](#4-interface-segregation-principle-isp)  
+5. [**D** - Dependency Inversion Principle](#5-dependency-inversion-principle-dip)
 
 ---
 
