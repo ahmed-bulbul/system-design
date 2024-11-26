@@ -275,3 +275,103 @@ class chef implements CookFood{
 }
 
 ```
+### 5. Dependency Inversion Principle (DIP)
+
+**Definition:**
+Class should depend on interface rather than concrete class.
+
+High-level modules should not depend on low-level modules. Both should depend on abstractions.
+
+**Key Points:**
+
+- High-level modules should not depend on low-level modules. Both should depend on abstractions.
+
+**Example:**
+
+
+Here is an example of violating DIP:
+
+The PaymentProcessor class depends directly on the PayPalService concrete class.
+If you want to switch to another payment service (e.g., Stripe or Bkash), you would need to modify the PaymentProcessor class, breaking its closed-for-modification principle.
+
+```java
+// PayPal service for handling payments
+class PayPalService {
+    public void processPayment(double amount) {
+        System.out.println("Processing payment of $" + amount + " via PayPal.");
+    }
+}
+
+// Payment processor tightly coupled with PayPalService
+class PaymentProcessor {
+    private PayPalService payPalService;
+
+    public PaymentProcessor() {
+        this.payPalService = new PayPalService(); // Direct dependency on a concrete class
+    }
+
+    public void process(double amount) {
+        payPalService.processPayment(amount); // Tightly coupled call
+    }
+}
+
+// Main class
+public class DIPViolationExample {
+    public static void main(String[] args) {
+        PaymentProcessor processor = new PaymentProcessor();
+        processor.process(100.0);
+    }
+}
+```
+
+Solution:
+
+```java
+// Abstraction for payment service
+interface PaymentService {
+    void processPayment(double amount);
+}
+
+// PayPal service implementation
+class PayPalService implements PaymentService {
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("Processing payment of $" + amount + " via PayPal.");
+    }
+}
+
+// Stripe service implementation
+class StripeService implements PaymentService {
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("Processing payment of $" + amount + " via Stripe.");
+    }
+}
+
+// PaymentProcessor depends on abstraction, not concrete classes
+class PaymentProcessor {
+    private PaymentService paymentService;
+
+    public PaymentProcessor(PaymentService paymentService) {
+        this.paymentService = paymentService; // Inject dependency
+    }
+
+    public void process(double amount) {
+        paymentService.processPayment(amount); // Call via abstraction
+    }
+}
+
+// Main class
+public class DIPSolutionExample {
+    public static void main(String[] args) {
+        PaymentService payPalService = new PayPalService();
+        PaymentProcessor payPalProcessor = new PaymentProcessor(payPalService);
+        payPalProcessor.process(100.0);
+
+        PaymentService stripeService = new StripeService();
+        PaymentProcessor stripeProcessor = new PaymentProcessor(stripeService);
+        stripeProcessor.process(200.0);
+    }
+}
+
+```
