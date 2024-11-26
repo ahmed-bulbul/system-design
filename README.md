@@ -77,3 +77,46 @@ class Bicycle implements Bike {
         // Bicycles accelerate manually
     }
 }
+
+```
+Solution:
+
+```java
+// Base interface for all vehicles
+interface Vehicle {
+    void accelerate();
+}
+
+// Specialized interface for vehicles with engines
+interface EngineVehicle extends Vehicle {
+    void turnOnEngine();
+}
+
+// MotorBike class implements EngineVehicle
+class MotorBike implements EngineVehicle {
+    private boolean isEngineOn;
+    private int speed;
+
+    @Override
+    public void turnOnEngine() {
+        this.isEngineOn = true;
+    }
+
+    @Override
+    public void accelerate() {
+        if (isEngineOn) {
+            this.speed += 10;
+        }
+    }
+}
+
+// Bicycle class implements Vehicle (without engine)
+class Bicycle implements Vehicle {
+    @Override
+    public void accelerate() {
+        // Bicycles accelerate manually
+    }
+}
+
+
+```
