@@ -1,6 +1,7 @@
 # Low-Level Design Principles
 
 [SOLID Principles](#solid-principles)
+[Strategy Pattern](#strategy-pattern)
 
 ---
 
@@ -439,3 +440,10 @@ public class DIPSolutionExample {
 }
 
 ```
+
+## Strategy Pattern:
+
+```java
+interface PaymentStrategy {
+    void pay(double amount);
+}
