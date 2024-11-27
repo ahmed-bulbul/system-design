@@ -84,8 +84,6 @@ class JUnitLearningTests {
 // Example service class to test
 class MyService {
     int add(int a, int b) {
-        a++;
-        b++;
         return a + b;
     }
 
