@@ -23,6 +23,9 @@ public class StategyApplication {
             case "subtract":
                 result = new Context(new SubstractOperation()).executeStrategy(num1, num2);
                 break;
+            case "multiply":
+                result = new Context(new MultiplyOperation()).executeStrategy(num1, num2);
+                break;
             default:
                 System.out.println("Invalid operation");
                 break;
