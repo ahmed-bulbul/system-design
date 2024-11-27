@@ -523,6 +523,10 @@ class StrategyPatternExample {
             System.out.println("Invalid operation");
             return;
         }
+
+        Context context = new Context(strategy);
+        int result = context.executeStrategy(num1, num2);
+        System.out.println("Result: " + result);
     }
 }
 ```
