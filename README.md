@@ -449,7 +449,80 @@ public class DIPSolutionExample {
 
 ## Strategy Pattern:
 
+Strategy is a behavioral design pattern that lets you define a family of algorithms, put each of them into a separate class, and make their objects interchangeable.
+
+### 1. Application:
+
+Use the Strategy pattern when you want to use different variants of an algorithm within an object and be able to switch from one algorithm to another during runtime.
+
 ```java
-interface PaymentStrategy {
-    void pay(double amount);
+public interface Strategy {
+
+    public int doOperation(int num1, int num2);
 }
+
+public class OperationAdd implements Strategy {
+
+    @Override
+    public int doOperation(int num1, int num2) {
+        return num1 + num2;
+    }
+}
+
+public class OperationSubtract implements Strategy {
+
+    @Override
+    public int doOperation(int num1, int num2) {
+        return num1 - num2;
+    }
+}
+
+public class OperationMultiply implements Strategy {
+
+    @Override
+    public int doOperation(int num1, int num2) {
+        return num1 * num2;
+    }
+}
+
+public class Context {
+
+    private Strategy strategy;
+
+    public Context(Strategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public int executeStrategy(int num1, int num2) {
+        return strategy.doOperation(num1, num2);
+    }
+}
+
+class StrategyPatternExample {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter first number: ");
+        int num1 = scanner.nextInt();
+
+        System.out.print("Enter second number: ");
+        int num2 = scanner.nextInt();
+
+        System.out.print("Enter operation (add, subtract, multiply): ");
+        String operation = scanner.next();
+
+        Strategy strategy;
+        if (operation.equals("add")) {
+            strategy = new OperationAdd();
+        } else if (operation.equals("subtract")) {
+            strategy = new OperationSubtract();
+        } else if (operation.equals("multiply")) {
+            strategy = new OperationMultiply();
+        } else {
+            System.out.println("Invalid operation");
+            return;
+        }
+    }
+}
+```
