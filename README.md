@@ -1,7 +1,8 @@
 # Low-Level Design Principles
 
 [1.SOLID Principles](#solid-principles) <br>
-[2.Strategy Pattern](#strategy-pattern)
+[2.Strategy Pattern](#strategy-pattern) <br>
+[3.Observer Pattern](#observer-pattern) <br>
 
 # High-Level Design Principles
 
@@ -530,3 +531,76 @@ class StrategyPatternExample {
     }
 }
 ```
+## Observer Pattern:
+
+Observer is a behavioral design pattern that allows you to define a one-to-many dependency between objects, where one object updates other objects when it changes state.
+
+### 1. Application:
+
+Use the Observer pattern when changes to the state of one object may require changing other objects, and the actual set of objects is unknown beforehand or changes dynamically.
+
+```java
+public interface Observer {
+    void update(String news);
+}
+
+public class Channel implements Observer {
+
+    @Override
+    public void update(String news) {
+        System.out.println("Channel 1: " + news);
+    }
+}
+
+public class Channel2 implements Observer {
+
+    @Override
+    public void update(String news) {
+        System.out.println("Channel 2: " + news);
+    }
+
+}
+
+public class Channel3 implements Observer {
+
+    @Override
+    public void update(String news) {
+        System.out.println("Channel 3: " + news);
+    }
+}
+
+public class NewsAgency {
+
+    private Channel channel1;
+    private Channel channel2;
+    private Channel channel3;
+
+    public NewsAgency(Channel channel1, Channel channel2, Channel channel3) {
+        this.channel1 = channel1;
+        this.channel2 = channel2;
+        this.channel3 = channel3;
+    }
+
+    public void publishNews(String news) {
+        channel1.update(news);
+        channel2.update(news);
+        channel3.update(news);
+    }
+}
+
+class ObserverPatternExample {
+
+    public static void main(String[] args) {
+        Channel channel1 = new Channel();
+        Channel channel2 = new Channel();
+        Channel channel3 = new Channel();
+        NewsAgency newsAgency = new NewsAgency(channel1, channel2, channel3);
+
+        newsAgency.publishNews("Breaking news!");
+
+        // Output: Channel 1: Breaking news!
+        
+    }
+
+
+}
