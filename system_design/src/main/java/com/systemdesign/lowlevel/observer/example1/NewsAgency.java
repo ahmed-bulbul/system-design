@@ -1,4 +1,4 @@
-package com.systemdesign.lowlevel.observer;
+package com.systemdesign.lowlevel.observer.example1;
 
 import java.util.ArrayList;
 import java.util.List;

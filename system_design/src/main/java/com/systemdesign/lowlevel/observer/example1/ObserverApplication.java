@@ -1,4 +1,4 @@
-package com.systemdesign.lowlevel.observer;
+package com.systemdesign.lowlevel.observer.example1;
 
 public class ObserverApplication {
 
