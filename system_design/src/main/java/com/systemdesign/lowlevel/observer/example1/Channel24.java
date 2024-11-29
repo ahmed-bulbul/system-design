@@ -6,10 +6,11 @@ public class Channel24 implements Channel{
 
     @Override
     public void notifyAllSubscriber(Object news) {
-        this.setNews("From Channel 24 : "+(String)news);
+        this.setNews((String)news);
     }
 
     public String getNews() {
+        System.out.println("Channel 24: ");
         return news;
     }
 

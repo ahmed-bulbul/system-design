@@ -18,8 +18,6 @@ public class ObserverApplication {
 
 
         // update the news
-        newsAgency.uploadNews("New news");
-        newsAgency.uploadNews("Breaking news" );
         newsAgency.uploadNews("Breaking news : Sheikh hasina flew to India" );
 
 
