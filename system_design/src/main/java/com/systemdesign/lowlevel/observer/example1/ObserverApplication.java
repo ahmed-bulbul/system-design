@@ -13,14 +13,14 @@ public class ObserverApplication {
 
 
         // add channels to news agency
-        newsAgency.addObserver(channel24);
-        newsAgency.addObserver(channel71);
+        newsAgency.subscribe(channel24);
+        newsAgency.subscribe(channel71);
 
 
         // update the news
-        newsAgency.setNews("New news");
-        newsAgency.setNews("Breaking news" );
-        newsAgency.setNews("Breaking news : Sheikh hasina flew to India" );
+        newsAgency.uploadNews("New news");
+        newsAgency.uploadNews("Breaking news" );
+        newsAgency.uploadNews("Breaking news : Sheikh hasina flew to India" );
 
 
         //subscribers get the news

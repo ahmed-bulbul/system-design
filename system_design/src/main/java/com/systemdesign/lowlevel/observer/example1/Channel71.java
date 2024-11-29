@@ -5,8 +5,8 @@ public class Channel71 implements Channel {
     private String news;
 
     @Override
-    public void update(Object news) {
-        this.setNews((String)news);
+    public void notifyAllSubscriber(Object news) {
+        this.setNews("From Channel 71 : "+(String)news);
     }
 
     public String getNews() {

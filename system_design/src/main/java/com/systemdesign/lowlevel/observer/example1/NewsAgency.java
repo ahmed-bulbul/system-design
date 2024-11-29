@@ -8,18 +8,18 @@ public class NewsAgency {
     private String news;
     private List<Channel> channels = new ArrayList<>();
 
-    public void addObserver(Channel channel) {
+    public void subscribe(Channel channel) {
         this.channels.add(channel);
     }
 
-    public void removeObserver(Channel channel) {
+    public void unsubscribe(Channel channel) {
         this.channels.remove(channel);
     }
 
-    public void setNews(String news) {
+    public void uploadNews(String news) {
         this.news = news;
         for (Channel channel : this.channels) {
-            channel.update(this.news);
+            channel.notifyAllSubscriber(this.news);
         }
     }
 
