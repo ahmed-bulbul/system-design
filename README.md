@@ -628,18 +628,18 @@ public class BasePizza implements Pizza {
     }
 }
 
-public class Decorator implements Pizza {
+public abstract class PizzaDecorator implements Pizza {
 
-    private Pizza pizza;
+    protected Pizza pizza;
 
-    public Decorator(Pizza pizza) {
+    public PizzaDecorator(Pizza pizza) {
         this.pizza = pizza;
     }
 
-    @Override
     public String bake() {
         return pizza.bake();
     }
+
 }
 
 public class JalepanoDecorator extends PizzaDecorator {
