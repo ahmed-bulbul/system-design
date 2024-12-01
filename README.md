@@ -3,6 +3,7 @@
 [1.SOLID Principles](#solid-principles) <br>
 [2.Strategy Pattern](#strategy-pattern) <br>
 [3.Observer Pattern](#observer-pattern) <br>
+[4.Decorator Pattern](#decorator-pattern) <br>
 
 # High-Level Design Principles
 
@@ -604,3 +605,85 @@ class ObserverPatternExample {
 
 
 }
+
+```
+## Decorator Pattern:
+
+Decorator is a structural design pattern that allows you to attach additional responsibilities to objects dynamically.
+
+### 1. Application:
+
+Use the Decorator pattern when you want to dynamically add new behavior to an object without modifying its class.
+
+```java
+public interface Pizza {
+    public String bake();
+}
+
+public class BasePizza implements Pizza {
+
+    @Override
+    public String bake() {
+        return "Baking base pizza";
+    }
+}
+
+public class Decorator implements Pizza {
+
+    private Pizza pizza;
+
+    public Decorator(Pizza pizza) {
+        this.pizza = pizza;
+    }
+
+    @Override
+    public String bake() {
+        return pizza.bake();
+    }
+}
+
+public class JalepanoDecorator extends PizzaDecorator {
+
+    public JalepanoDecorator(Pizza pizza) { 
+        super(pizza);
+    }
+
+    @Override
+    public String bake() {
+        return super.bake() + addJalepano();
+    }
+
+    public String addJalepano(){
+        return "Jalepano";
+    }
+
+}
+
+
+public class CheeseBurstDecorator extends PizzaDecorator{
+
+    public CheeseBurstDecorator(Pizza pizza) {
+        super(pizza);
+
+    }
+
+    @Override
+    public String bake() {
+        return super.bake() + addCheeseBursts();
+    }
+
+    public String addCheeseBursts() {
+        return "CheeseBursts";
+    }
+
+}
+
+class DecoratorPatternExample {
+
+    public static void main(String[] args) {
+        Pizza pizza = new CheeseBurstDecorator(new JalepanoDecorator(new BasePizza()));
+        System.out.println(pizza.bake());
+    }
+}
+
+```
