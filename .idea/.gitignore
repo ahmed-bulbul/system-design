@@ -1,0 +1,27 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# Generated files
+*.iml
+*.iws
+*.ipr
+*.iml 
+*.log
+*.iml
+
+# Gradle
+/build/
+
+# IntelliJ
+.idea/
+
+# Maven 
+/target/
+
+# Gradle
+/gradle/
+
+# IntelliJ
+.idea/
+

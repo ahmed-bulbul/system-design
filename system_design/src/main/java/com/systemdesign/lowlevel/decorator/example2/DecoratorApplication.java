@@ -1,15 +1,21 @@
 package com.systemdesign.lowlevel.decorator.example2;
 
+
+import java.util.logging.Logger;
+
 public class DecoratorApplication {
 
+    public static final Logger logger = Logger.getLogger(DecoratorApplication.class.getName());
+    public static final String NEW_LINE = "\n";
+    public static final String DECORATION = " -> $ ";
     public static void main(String[] args) {
         Coffee simpleCoffee = new SimpleCoffee();
-        System.out.println(simpleCoffee.getDescription() + " -> $" + simpleCoffee.getCost());
+        logger.info(simpleCoffee.getDescription() + DECORATION + simpleCoffee.getCost());
 
         Coffee milkCoffee = new MilkDecorator(simpleCoffee);
-        System.out.println(milkCoffee.getDescription() + " -> $" + milkCoffee.getCost());
+        logger.info(milkCoffee.getDescription() + DECORATION + milkCoffee.getCost());
 
         Coffee milkAndSugarCoffee = new SugarDecorator(milkCoffee);
-        System.out.println(milkAndSugarCoffee.getDescription() + " -> $" + milkAndSugarCoffee.getCost());
+        logger.info(milkAndSugarCoffee.getDescription() + DECORATION + milkAndSugarCoffee.getCost());
     }
 }
