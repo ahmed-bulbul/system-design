@@ -5,17 +5,17 @@ import com.systemdesign.lowlevel.decorator.example2.SugarDecorator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CoffeeTest {
+class CoffeeTest {
 
     @Test
-    public void testSimpleCoffee() {
+    void testSimpleCoffee() {
         Coffee simpleCoffee = new SimpleCoffee();
         assertEquals("Simple Coffee", simpleCoffee.getDescription());
         assertEquals(5.0, simpleCoffee.getCost());
     }
 
     @Test
-    public void testMilkDecorator() {
+    void testMilkDecorator() {
         Coffee simpleCoffee = new SimpleCoffee();
         Coffee milkCoffee = new MilkDecorator(simpleCoffee);
         assertEquals("Simple Coffee, Milk", milkCoffee.getDescription());
@@ -23,7 +23,7 @@ public class CoffeeTest {
     }
 
     @Test
-    public void testSugarDecorator() {
+    void testSugarDecorator() {
         Coffee simpleCoffee = new SimpleCoffee();
         Coffee sugarCoffee = new SugarDecorator(simpleCoffee);
         assertEquals("Simple Coffee, Sugar", sugarCoffee.getDescription());
@@ -31,7 +31,7 @@ public class CoffeeTest {
     }
 
     @Test
-    public void testMilkAndSugarDecorators() {
+    void testMilkAndSugarDecorators() {
         Coffee simpleCoffee = new SimpleCoffee();
         Coffee milkCoffee = new MilkDecorator(simpleCoffee);
         Coffee milkAndSugarCoffee = new SugarDecorator(milkCoffee);
@@ -40,7 +40,7 @@ public class CoffeeTest {
     }
 
     @Test
-    public void testMultipleDecoratorsOrderIndependence() {
+    void testMultipleDecoratorsOrderIndependence() {
         Coffee simpleCoffee = new SimpleCoffee();
         Coffee sugarCoffee = new SugarDecorator(simpleCoffee);
         Coffee sugarAndMilkCoffee = new MilkDecorator(sugarCoffee);

@@ -9,6 +9,7 @@ public class DecoratorApplication {
     public static final String NEW_LINE = "\n";
     public static final String DECORATION = " -> $ ";
     public static void main(String[] args) {
+
         Coffee simpleCoffee = new SimpleCoffee();
         logger.info(simpleCoffee.getDescription() + DECORATION + simpleCoffee.getCost());
 
