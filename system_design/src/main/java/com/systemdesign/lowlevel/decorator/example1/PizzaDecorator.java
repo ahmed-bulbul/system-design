@@ -1,4 +1,4 @@
-package com.systemdesign.lowlevel.decorator;
+package com.systemdesign.lowlevel.decorator.example1;
 
 public abstract class PizzaDecorator implements Pizza {
 
