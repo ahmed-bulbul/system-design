@@ -4,6 +4,7 @@
 [2.Strategy Pattern](#strategy-pattern) <br>
 [3.Observer Pattern](#observer-pattern) <br>
 [4.Decorator Pattern](#decorator-pattern) <br>
+[5.Factory Pattern](#factory-pattern) <br>
 
 # High-Level Design Principles
 
@@ -683,6 +684,61 @@ class DecoratorPatternExample {
     public static void main(String[] args) {
         Pizza pizza = new CheeseBurstDecorator(new JalepanoDecorator(new BasePizza()));
         System.out.println(pizza.bake());
+    }
+}
+
+```
+## Factory Pattern:
+
+Factory is a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to specify the type of objects to create.
+
+### 1. Application:
+
+Use the Factory pattern when you want to create objects of different types based on a common interface.
+
+```java
+public interface PaymentService {
+    void processPayment(double amount);
+}
+
+public class PayPalService implements PaymentService {
+
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("Processing payment with PayPal: $" + amount);
+    }
+
+}
+
+public class CreditCardService implements PaymentService {
+
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("Processing payment with credit card: $" + amount);
+    }
+
+}
+
+class PaymentServiceFactory {
+
+    public static PaymentService createPaymentService(String paymentMethod) {
+        if (paymentMethod.equals("paypal")) {
+            return new PayPalService();
+        } else if (paymentMethod.equals("creditcard")) {
+            return new CreditCardService();
+        } else {
+            throw new IllegalArgumentException("Invalid payment method: " + paymentMethod);
+        }
+    }
+}
+
+class PaymentServicePatternExample {
+
+    public static void main(String[] args) {
+        PaymentService paypalService = PaymentServiceFactory.createPaymentService("paypal");
+        PaymentService creditCardService = PaymentServiceFactory.createPaymentService("creditcard");
+        paypalService.processPayment(100.0);
+        creditCardService.processPayment(200.0);
     }
 }
 

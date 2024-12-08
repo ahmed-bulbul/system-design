@@ -1,3 +1,5 @@
+package com.systemdesign;
+
 import com.systemdesign.lowlevel.decorator.example2.Coffee;
 import com.systemdesign.lowlevel.decorator.example2.MilkDecorator;
 import com.systemdesign.lowlevel.decorator.example2.SimpleCoffee;
