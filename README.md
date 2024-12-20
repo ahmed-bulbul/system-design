@@ -752,67 +752,74 @@ This is a simple example of a parking lot management system
 ```java
 public interface VehicleType {
     String getType();
-    String getLicensePlate();
-
 }
-public abstract class Vehicle implements VehicleType {
-    protected final String licensePlate;
-    protected final String type;
 
-    protected Vehicle(String licensePlate, String type) {
-        if(licensePlate == null || type == null || licensePlate.isEmpty() || type.isEmpty()) {
-            throw new IllegalArgumentException("License plate and type cannot be null.");
+public class MotorcycleType implements VehicleType {
+    @Override
+    public String getType() {
+        return "Motorcycle";
+    }
+}
+
+public class CarType implements VehicleType {
+    @Override
+    public String getType() {
+        return "Car";
+    }
+}
+
+public class TruckType implements VehicleType {
+    @Override
+    public String getType() {
+        return "Truck";
+    }
+}
+
+public abstract class Vehicle {
+    private final String licensePlate;
+    private final VehicleType type;
+
+    protected Vehicle(String licensePlate, VehicleType type) {
+        if (licensePlate == null || licensePlate.isEmpty()) {
+            throw new IllegalArgumentException("License plate cannot be null or empty.");
         }
-        this.type = type;
         this.licensePlate = licensePlate;
+        this.type = type;
     }
 
     public String getLicensePlate() {
         return licensePlate;
     }
 
-    public String getType() {
+    public VehicleType getType() {
         return type;
     }
-
 }
 
 public class Car extends Vehicle {
-
-    public static final String TYPE = "Car";
     public Car(String licensePlate) {
-        super(licensePlate,TYPE);
+        super(licensePlate, new CarType());
     }
-
 }
 
-public class MotorCycle extends Vehicle {
-
-    public static final String TYPE = "MotorCycle";
-    public MotorCycle(String licensePlate) {
-        super(licensePlate, TYPE);
+public class Motorcycle extends Vehicle {
+    public Motorcycle(String licensePlate) {
+        super(licensePlate, new MotorcycleType());
     }
-
-
 }
-public class Truck  extends Vehicle {
 
-    public static final String TYPE = "Truck";
-
+public class Truck extends Vehicle {
     public Truck(String licensePlate) {
-        super(licensePlate, TYPE);
+        super(licensePlate, new TruckType());
     }
 }
-
-
 
 public class ParkingSpot {
-
     private final int spotNumber;
-    private final String vehicleType;
+    private final VehicleType vehicleType;
     private Vehicle parkedVehicle;
 
-    public ParkingSpot(int spotNumber, String vehicleType) {
+    public ParkingSpot(int spotNumber, VehicleType vehicleType) {
         this.spotNumber = spotNumber;
         this.vehicleType = vehicleType;
     }
@@ -822,39 +829,36 @@ public class ParkingSpot {
     }
 
     public synchronized void parkVehicle(Vehicle vehicle) {
-
-        if (isAvailable() && vehicle.getType().equals(vehicleType)) {
+        if (isAvailable() && vehicle.getType().getType().equals(vehicleType.getType())) {
             parkedVehicle = vehicle;
-        }else {
+        } else {
             throw new IllegalArgumentException("Invalid vehicle type or spot already occupied.");
         }
-
     }
 
-    public synchronized boolean unparkVehicle() {
+    public synchronized void unparkVehicle() {
         if (!isAvailable()) {
             parkedVehicle = null;
-            return true;
+        } else {
+            throw new IllegalStateException("Spot is already empty.");
         }
-        return false;
     }
 
     public synchronized Vehicle getParkedVehicle() {
         return parkedVehicle;
     }
 
-    public synchronized int getSpotNumber() {
+    public int getSpotNumber() {
         return spotNumber;
     }
 
-    public synchronized String getVehicleType() {
+    public VehicleType getVehicleType() {
         return vehicleType;
     }
-
-
-
 }
 
+import java.util.ArrayList;
+        import java.util.List;
 
 public class Level {
     private final int floor;
@@ -862,44 +866,42 @@ public class Level {
 
     public Level(int floor, int numSpots) {
         this.floor = floor;
-        parkingSpots = new ArrayList<>(numSpots);
-        // Assign spots in ration of 50:40:10 for bikes, cars and trucks
-        double spotsForBikes = 0.50;
-        double spotsForCars = 0.40;
+        this.parkingSpots = new ArrayList<>();
+        allocateSpots(numSpots);
+    }
 
-        int numBikes = (int) (numSpots * spotsForBikes);
-        int numCars = (int) (numSpots * spotsForCars);
+    private void allocateSpots(int numSpots) {
+        int numMotorcycles = (int) (numSpots * 0.50);
+        int numCars = (int) (numSpots * 0.40);
+        int numTrucks = numSpots - numMotorcycles - numCars;
 
-        for (int i = 1; i <= numBikes; i++) {
-            parkingSpots.add(new ParkingSpot(i, MotorCycle.TYPE));
+        for (int i = 1; i <= numMotorcycles; i++) {
+            parkingSpots.add(new ParkingSpot(i, new MotorcycleType()));
         }
-        for (int i = numBikes + 1; i <= numBikes + numCars; i++) {
-            parkingSpots.add(new ParkingSpot(i, Car.TYPE));
+        for (int i = numMotorcycles + 1; i <= numMotorcycles + numCars; i++) {
+            parkingSpots.add(new ParkingSpot(i, new CarType()));
         }
-        for (int i = numBikes + numCars + 1; i <= numSpots; i++) {
-            parkingSpots.add(new ParkingSpot(i, Truck.TYPE));
+        for (int i = numMotorcycles + numCars + 1; i <= numSpots; i++) {
+            parkingSpots.add(new ParkingSpot(i, new TruckType()));
         }
     }
 
     public synchronized boolean parkVehicle(Vehicle vehicle) {
-
         for (ParkingSpot spot : parkingSpots) {
-            if (spot.isAvailable() && spot.getVehicleType().equals(vehicle.getType())) {
+            if (spot.isAvailable() && spot.getVehicleType().getType().equals(vehicle.getType().getType())) {
                 spot.parkVehicle(vehicle);
-                System.out.println("Vehicle " + vehicle.getLicensePlate()+" [type : "+ vehicle.getType() +"]"+ " has been parked at spot " + spot.getSpotNumber());
+                System.out.println("Vehicle " + vehicle.getLicensePlate() + " [type: " + vehicle.getType().getType() + "] parked at spot " + spot.getSpotNumber());
                 return true;
             }
         }
         return false;
     }
 
-
-
     public synchronized boolean unparkVehicle(Vehicle vehicle) {
         for (ParkingSpot spot : parkingSpots) {
             if (!spot.isAvailable() && spot.getParkedVehicle().equals(vehicle)) {
                 spot.unparkVehicle();
-                System.out.println("Vehicle " + vehicle.getLicensePlate() + " type : "+ vehicle.getType() + " has been unparked from spot " + spot.getSpotNumber());
+                System.out.println("Vehicle " + vehicle.getLicensePlate() + " [type: " + vehicle.getType().getType() + "] unparked from spot " + spot.getSpotNumber());
                 return true;
             }
         }
@@ -909,27 +911,22 @@ public class Level {
     public void displayAvailability() {
         System.out.println("Level " + floor + " Availability:");
         for (ParkingSpot spot : parkingSpots) {
-            System.out.println("Spot " + spot.getSpotNumber() + ": " + (spot.isAvailable() ? "Available For"  : "Occupied By ")+" "+spot.getVehicleType());
+            System.out.println("Spot " + spot.getSpotNumber() + ": " + (spot.isAvailable() ? "Available for " + spot.getVehicleType().getType() : "Occupied"));
         }
     }
 
-
     public boolean isFull() {
-        for (ParkingSpot spot : parkingSpots) {
-            if (spot.isAvailable()) {
-                return false;
-            }
-        }
-        return true;
+        return parkingSpots.stream().noneMatch(ParkingSpot::isAvailable);
     }
 }
 
 
+import java.util.ArrayList;
+        import java.util.List;
 
 public class ParkingLot {
-
     private static ParkingLot instance;
-    private List<Level> levels;
+    private final List<Level> levels;
 
     private ParkingLot() {
         levels = new ArrayList<>();
@@ -944,7 +941,6 @@ public class ParkingLot {
 
     public void addLevel(Level level) {
         levels.add(level);
-
     }
 
     public void displayAvailability() {
@@ -953,69 +949,59 @@ public class ParkingLot {
         }
     }
 
-    public void parkVehicle(Vehicle vehicle) {
+    public boolean parkVehicle(Vehicle vehicle) {
         for (Level level : levels) {
             if (level.parkVehicle(vehicle)) {
-                break;
+                return true;
             }
         }
+        return false;
     }
 
-    public void unparkVehicle(Vehicle vehicle) {
+    public boolean unparkVehicle(Vehicle vehicle) {
         for (Level level : levels) {
             if (level.unparkVehicle(vehicle)) {
-                break;
+                return true;
             }
         }
+        return false;
     }
 
     public boolean isFull() {
-        for (Level level : levels) {
-            if (!level.isFull()) {
-                return false;
-            }
-        }
-        return true;
+        return levels.stream().allMatch(Level::isFull);
     }
-
 }
+
 
 public class ParkingLotApplication {
     public static void main(String[] args) {
-
         ParkingLot parkingLot = ParkingLot.getInstance();
 
         parkingLot.addLevel(new Level(1, 5));
         parkingLot.addLevel(new Level(2, 5));
 
         Vehicle car = new Car("ABC123");
-        Vehicle car2 = new Car("ABC1234");
+        Vehicle car2 = new Car("DEF456");
         Vehicle truck = new Truck("XYZ789");
-        Vehicle motorcycle = new MotorCycle("M1234");
+        Vehicle motorcycle = new Motorcycle("M1234");
 
-        // Display availability
         parkingLot.displayAvailability();
 
-        System.out.println("----------Parking-------");
-
-        // Park vehicles
+        System.out.println("---------- Parking ----------");
         parkingLot.parkVehicle(car);
         parkingLot.parkVehicle(car2);
         parkingLot.parkVehicle(truck);
         parkingLot.parkVehicle(motorcycle);
 
-
-
-        // Unpark vehicle
+        System.out.println("---------- Unparking ----------");
         parkingLot.unparkVehicle(motorcycle);
 
-        System.out.println("-------------unpark---------------");
-
-
-        // Display updated availability
         parkingLot.displayAvailability();
-
     }
 }
+
+
+
+
 
 ```
