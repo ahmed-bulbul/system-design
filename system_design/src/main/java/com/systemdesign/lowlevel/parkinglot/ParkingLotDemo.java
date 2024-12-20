@@ -9,8 +9,8 @@ public class ParkingLotDemo {
 
     public static void main(String[] args) {
         ParkingLot parkingLot = ParkingLot.getInstance();
-        parkingLot.addLevel(new Level(1, 100));
-        parkingLot.addLevel(new Level(2, 80));
+        parkingLot.addLevel(new Level(1, 5));
+        parkingLot.addLevel(new Level(2, 5));
 
         Vehicle car = new Car("ABC123");
         Vehicle truck = new Truck("XYZ789");
@@ -26,6 +26,11 @@ public class ParkingLotDemo {
 
         // Unpark vehicle
         parkingLot.unparkVehicle(motorcycle);
+
+        System.out.println("----------------------------");
+        System.out.println("After unparking motorcycle:");
+        System.out.println();
+        System.out.println("----------------------------");
 
         // Display updated availability
         parkingLot.displayAvailability();
