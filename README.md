@@ -6,6 +6,7 @@
 [4.Decorator Pattern](#decorator-pattern) <br>
 [5.Factory Pattern](#factory-pattern) <br>
 [6.Parking Lot](#parking-lot) <br>
+[7.Adapter Pattern](#adapter-pattern) <br>
 
 # High-Level Design Principles
 
@@ -857,8 +858,6 @@ public class ParkingSpot {
     }
 }
 
-import java.util.ArrayList;
-        import java.util.List;
 
 public class Level {
     private final int floor;
@@ -919,10 +918,6 @@ public class Level {
         return parkingSpots.stream().noneMatch(ParkingSpot::isAvailable);
     }
 }
-
-
-import java.util.ArrayList;
-        import java.util.List;
 
 public class ParkingLot {
     private static ParkingLot instance;
@@ -1005,3 +1000,102 @@ public class ParkingLotApplication {
 
 
 ```
+
+## Adapter Pattern
+
+```java
+
+public interface Student {
+    public String getName();
+    public String getSurname();
+    public String getEmail();
+}
+
+public class CollegeStudent implements Student {
+    private String name;
+    private String surname;
+    private String email;
+    
+    public CollegeStudent(String name, String surname, String email) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public String getSurname() {
+        return surname;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+}
+
+public class SchoolStudent {
+    private String firstName;
+    private String lastName;
+    private String emailAddress;
+    
+    public SchoolStudent(String name, String surname, String email) {
+        this.firstName = name;
+        this.lastName = surname;
+        this.emailAddress = email;
+    }
+    
+    public String getName() {
+        return firstName;
+    }
+    
+    public String getSurname() {
+        return lastName;
+    }
+    
+    public String getEmail() {
+        return emailAddress;
+    }   
+}
+
+public class SchoolStudentAdapter implements Student {
+    private SchoolStudent schoolStudent;
+    
+    public SchoolStudentAdapter(SchoolStudent schoolStudent) {
+        this.schoolStudent = schoolStudent;
+    }
+    
+    public String getName() {
+        return schoolStudent.getName();
+    }
+    
+    public String getSurname() {
+        return schoolStudent.getSurname();
+    }
+    
+    public String getEmail() {
+        return schoolStudent.getEmail();
+    }
+}
+
+
+
+public class AdapterPatternExample {
+    public List<Student> getStudents() {
+        List<Student> studentList = new ArrayList<>();
+        
+        CollegeStudent student = new CollegeStudent("Gokul", "Kumar", "gokul.kumar@in");
+        
+        SchoolStudent student1 = new SchoolStudent("Gokul", "Kumar", "gokul.kumar@in");
+        
+        studentList.add(student);
+        studentList.add(new SchoolStudentAdapter(student1));
+        
+        return studentList;
+    }
+}
+
+```
+
+
